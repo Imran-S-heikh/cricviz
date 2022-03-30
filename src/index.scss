@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+}
+:root {
+  --primary: #e84545;
+  --secondary: #2b2e4a;
+  --background: #1d212c;
+  --text: #fff;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: "Inter", sans-serif;
+}
+.root {
+  color: var(--text);
+}
+
+@import "./styles/scss/default.style.scss";
+@import "./styles/scss/atomic.style.scss";
+@import "./styles/scss/component.style.scss";
