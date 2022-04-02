@@ -5,7 +5,7 @@ export interface Ball {
   bowlerName: string,
   batterName: string,
   ballType: 'legal' | 'wide' | 'no-ball',
-  runType: 'legal' | 'bye',
+  scoreType: 'legal' | 'bye' | 'wicket',
   time: number
 }
 

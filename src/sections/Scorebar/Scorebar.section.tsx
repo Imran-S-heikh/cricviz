@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useRecoilValue } from "recoil";
+import Hide from "../../molecules/Hide.mole";
+import { ballToOver } from "../../utils/util";
 import ScoreIndicator from "./molecules/StrikeIndicator.mole";
 import { ScorebarState } from "./scorebar.state";
 interface Props { }
@@ -75,7 +77,7 @@ function Bowler() {
 
 function Scorebar({ }: Props) {
 
-  const {score} = useRecoilValue(ScorebarState);
+  const { score, wicket, balls } = useRecoilValue(ScorebarState);
 
   return (
     <div className="W(80%) D(g) Gtcr(3) P(1rem) Gap(1rem) H(16rem) Bgc(bg) Pos(a) Fz(3rem) Mx(a) B(2rem) Start(50%) TranslateX(-50%)">
@@ -83,18 +85,20 @@ function Scorebar({ }: Props) {
         <div className="Bgc(sn) Ai(c) D(f) Ta(c) Fx(1)">
           <p className="Fx(1)">TS</p>
           <p className="Fx(1) Bgc(pm) H(100%) D(f) Ai(c) Jc(c)">
-            <span>{score}-2</span>
+            <span>{score}-{wicket}</span>
           </p>
-          <p className="Fx(1)">3.1</p>
+          <p className="Fx(1)">{ballToOver(balls)}</p>
         </div>
         <div className="Bgc(sn) D(f) Ai(c) Fx(1)">
           <div className="D(f) Gap(1rem) Ai(fe)">
             <span className="C(txt) Fw(500) Mstart(1rem) Lh(1)">vs</span>
             <p>JS</p>
           </div>
-          <div className="Fx(1) D(f) Jc(fe) Mend(1rem)">
-            <p className="Fw(600) Fz(3rem)">RUN-RATE: 3.67</p>
-          </div>
+          {/* <Hide open={(score / balls) !== NaN}> */}
+            <div className="Fx(1) D(f) Jc(fe) Mend(1rem)">
+              <p className="Fw(600) Fz(3rem)">RUN-RATE: {(score / (balls / 6)).toFixed(2)}</p>
+            </div>
+          {/* </Hide> */}
         </div>
       </div>
       <div className="D(f) Fxd(c) Gap(5px)">
