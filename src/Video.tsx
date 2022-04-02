@@ -3,8 +3,11 @@ import Scorebar from "./sections/Scorebar/Scorebar.section";
 import { RecoilRoot, useSetRecoilState } from "recoil";
 import video from "./../target/20220222_171300.mp4";
 import React, { useEffect, useRef } from "react";
-import { Ball, DataState } from "./state/atom";
+import { DataState } from "./state/atom";
 import useTimeline from "./hooks/useTimeline.hook";
+import generateTimeline, { Timeline } from "./utils/timeline.util";
+import { match } from "./data/match.data";
+import { Ball } from "./types";
 
 // const data: Ball[] = [10, 36, 43, 55, 65, 78].map((s, i, items) => ({
 // 	bowlerName: "munna",
@@ -19,61 +22,63 @@ import useTimeline from "./hooks/useTimeline.hook";
 
 // interface BallType extends Ball {startFrame: number, endFrame: number};
 
-const data: Ball[] = [
-	{
-		bowlerName: "munna",
-		batterName: "shifayet",
-		score: 4,
-		time: 10,
-		ballType: "legal",
-		scoreType: "bye"
-	},
-	{
-		bowlerName: "munna",
-		batterName: "shifayet",
-		score: 2,
-		time: 36,
-		ballType: "legal",
-		scoreType: "bye"
-	},
-	{
-		bowlerName: "munna",
-		batterName: "shifayet",
-		score: 4,
-		time: 43,
-		ballType: "legal",
-		scoreType: "bye"
-	},
-	{
-		bowlerName: "munna",
-		batterName: "shifayet",
-		score: 6,
-		time: 55,
-		ballType: "legal",
-		scoreType: "bye"
-	},
-	{
-		bowlerName: "munna",
-		batterName: "shifayet",
-		score: 4,
-		time: 65,
-		ballType: "legal",
-		scoreType: "bye"
-	},
-	{
-		bowlerName: "munna",
-		batterName: "shifayet",
-		score: 1,
-		time: 78,
-		ballType: "legal",
-		scoreType: "bye"
-	}
-]
+// const data: Ball[] = [
+// 	{
+// 		bowlerName: "munna",
+// 		batterName: "shifayet",
+// 		score: 4,
+// 		time: 10,
+// 		ballType: "legal",
+// 		scoreType: "bye"
+// 	},
+// 	{
+// 		bowlerName: "munna",
+// 		batterName: "shifayet",
+// 		score: 2,
+// 		time: 36,
+// 		ballType: "legal",
+// 		scoreType: "bye"
+// 	},
+// 	{
+// 		bowlerName: "munna",
+// 		batterName: "shifayet",
+// 		score: 4,
+// 		time: 43,
+// 		ballType: "legal",
+// 		scoreType: "bye"
+// 	},
+// 	{
+// 		bowlerName: "munna",
+// 		batterName: "shifayet",
+// 		score: 6,
+// 		time: 55,
+// 		ballType: "legal",
+// 		scoreType: "bye"
+// 	},
+// 	{
+// 		bowlerName: "munna",
+// 		batterName: "shifayet",
+// 		score: 4,
+// 		time: 65,
+// 		ballType: "legal",
+// 		scoreType: "bye"
+// 	},
+// 	{
+// 		bowlerName: "munna",
+// 		batterName: "shifayet",
+// 		score: 1,
+// 		time: 78,
+// 		ballType: "legal",
+// 		scoreType: "bye"
+// 	}
+// ]
 
-const dataMapped: { [key: number]: Ball } = {};
+const timeline = generateTimeline(match,60);
 
-data.forEach((item) => {
-	dataMapped[item.time * 60] = item
+const dataMapped: { [key: number]: Timeline } = {};
+
+timeline.forEach((item) => {
+	dataMapped[item.frame] = item
 });
 
 const frames = Object.keys(dataMapped);
@@ -85,7 +90,7 @@ const Root = () => {
 
 	useEffect(() => {
 
-		const state: Ball[] = [];
+		const state: Timeline[] = [];
 
 		for (let dFrame of frames) {
 			if (Number(dFrame) <= frame) {

@@ -1,8 +1,8 @@
-type ID = string | number;
+export type ID = string | number;
 
-interface Ball {
+export interface Ball {
   bowler: ID,
-  batsman: ID,
+  batter: ID,
   score: number,
   ballType: 'legal' | 'wide' | 'no-ball',
   scoreType: 'legal' | 'bye' | 'wicket',

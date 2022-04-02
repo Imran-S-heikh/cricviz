@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useRecoilValue } from "recoil";
+import { match } from "../../data/match.data";
 import Hide from "../../molecules/Hide.mole";
+import generateTimeline from "../../utils/timeline.util";
 import { ballToOver } from "../../utils/util";
 import ScoreIndicator from "./molecules/StrikeIndicator.mole";
 import { ScorebarState } from "./scorebar.state";
@@ -41,22 +43,21 @@ function Ball({ score }: { score: string }) {
 function Bowler() {
 
   const [onStrike, setOnStrike] = useState(true);
+  const { currentOver: {bowlerId,runs,wicket,balls,over} } = useRecoilValue(ScorebarState);
 
   return (
     <React.Fragment>
       <div className="Bgc(sn) D(f) Jc(sb) Ai(c) Px(1rem) Fx(1)">
         <div className="D(f) Ai(c) Gap(1rem)">
-          <p className="Tt(u)">Munna</p>
+          <p className="Tt(u)">{bowlerId}</p>
         </div>
         <div className="D(f) Ai(fe) Gap(1rem)">
-          <p className="">1-12</p>
-          <span className="C(txt) Lh(1) Fw(500)">1.3</span>
+          <p className="">{wicket}-{runs}</p>
+          <span className="C(txt) Lh(1) Fw(500)">{ballToOver(balls)}</span>
         </div>
       </div>
       <div className="Fx(1) D(f) Ai(c) Gap(5px)">
-        <Ball score="W" />
-        <Ball score="1" />
-        <Ball score="4" />
+       {over.map(item=><Ball score={item} />)} 
         {/* <Ball score="2" />
         <Ball score="0" />
         <Ball score="3" />

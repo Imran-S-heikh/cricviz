@@ -1,15 +1,7 @@
 import { atom } from "recoil";
+import { Timeline } from "../utils/timeline.util";
 
-export interface Ball {
-  score: number,
-  bowlerName: string,
-  batterName: string,
-  ballType: 'legal' | 'wide' | 'no-ball',
-  scoreType: 'legal' | 'bye' | 'wicket',
-  time: number
-}
-
-export const DataState = atom<Ball[]>({
+export const DataState = atom<Timeline[]>({
   key: "DATA_STATE",
   default: []
 });
